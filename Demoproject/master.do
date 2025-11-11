@@ -27,15 +27,16 @@
 	`r(version)'
 	
 *** Setting up users
-	global project		"/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject"
+		global project		"/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject"
+
 	
 	
 **** Setting up folders
 	global data			"${project}/data"
-	global dofiles		"..."
-	global outputs		"..."
-	global tables		"..."
-	global figures		"${project}/outputs/figures"
+	global dofiles		"${project}/dofiles"
+	global outputs		"${project}/outputs"
+	global tables		"${outputs}/tables"
+	global figures		"${outputs}/figures"
 	
 	// Esttab options
 	global stars1		"label nolines nogaps fragment nomtitle nonumbers noobs nodep star(* 0.10 ** 0.05 *** 0.01) collabels(none) booktabs"
@@ -44,7 +45,7 @@
 	global main_tables        1   /// See switch
 
 	
-	// sysdir set PLUS "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/ado"
+	sysdir set PLUS "${dofiles}/ado"
 	
 	
 *** Install required packages
@@ -64,9 +65,5 @@
 *** Creating easy to read long versions of datasets
 	*** Execute dofiles
 	if (${main_tables} == 1) {
-		do "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/QJPS_Figures_Table_Replication_Code.do"
+		do "${dofiles}/QJPS_Figures_Table_Replication_Code.do"
 	}
-
-
-
-
