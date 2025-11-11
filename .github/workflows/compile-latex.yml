@@ -3,8 +3,7 @@ name: Compile LaTeX Outputs Report
 on:
   push:
     branches:
-      - AI-coding
-      - main
+      - github-automations
 
 jobs:
   build_latex:
@@ -90,23 +89,3 @@ jobs:
           name: outputs-report-pdf
           path: Demoproject/outputs_report.pdf
           retention-days: 90
-      
-      - name: Get short SHA
-        id: slug
-        run: echo "sha8=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
-      
-      - name: Upload to release (if exists)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
-        continue-on-error: true
-        with:
-          tag_name: latest
-          files: Demoproject/outputs_report.pdf
-          name: Latest Outputs Report
-          body: |
-            Automatically generated outputs report from commit ${{ steps.slug.outputs.sha8 }}
-            Generated on: ${{ steps.git_info.outputs.date }}
-            Author: ${{ steps.git_info.outputs.author }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
