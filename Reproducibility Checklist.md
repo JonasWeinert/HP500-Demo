@@ -16,6 +16,8 @@
 - Include a "Quick Start" section with numbered steps to reproduce results
 - Document any manual steps that cannot be automated (e.g., data requests, license agreements)
 
+You can get started with the template (README_Template.md) in this repository.
+
 ---
 
 ### ✓ Folder Structure: Clear and Modular Organization
