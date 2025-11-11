@@ -29,10 +29,6 @@
 % Graphics path
 \graphicspath{{outputs/figures/}{outputs/tables/}}
 
-% Dynamic content placeholders (will be replaced by GitHub Action)
-\newcommand{\gitdate}{GENERATION_DATE}
-\newcommand{\gitauthor}{GIT_AUTHOR}
-\newcommand{\gitcommits}{GIT_COMMITS}
 
 \begin{document}
 
@@ -42,24 +38,9 @@
     \vspace*{2cm}
     
     {\Huge\bfseries QJPS Replication Study\\[0.5cm] Outputs Report\par}
-    \vspace{2cm}
+    \vspace{4cm}
     
-    {\Large Generated on: \gitdate\par}
-    \vspace{1cm}
-    
-    {\Large Author: \gitauthor\par}
-    \vspace{2cm}
-    
-    {\large\bfseries Recent Changes:\par}
-    \vspace{0.5cm}
-    \begin{minipage}{0.8\textwidth}
-        \raggedright
-        \gitcommits
-    \end{minipage}
-    
-    \vfill
-    
-    {\large This document is automatically generated from the analysis outputs.\par}
+    {\large This document contains all figures and tables from the analysis.\par}
     
 \end{titlepage}
 
