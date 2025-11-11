@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - github-automations
+    paths:
+      - 'Demoproject/outputs/**'
+      - 'Demoproject/outputs_report.tex'
+      - '.github/workflows/compile-latex.yml'
 
 jobs:
   build_latex:
@@ -26,3 +30,11 @@ jobs:
           name: outputs-report-pdf
           path: Demoproject/outputs_report.pdf
           retention-days: 90
+      
+      - name: Commit PDF to repository
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add Demoproject/outputs_report.pdf
+          git diff --staged --quiet || git commit -m "Auto-update outputs report PDF [skip ci]"
+          git push
