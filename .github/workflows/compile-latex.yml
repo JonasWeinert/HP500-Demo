@@ -29,15 +29,15 @@ jobs:
           # Get all commits from this push (between before and after)
           if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
             # This is the first commit or a new branch
-            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short -n 5)
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s {\\small (%an, %ad)}' --date=short -n 5)
           else
             # Get commits between before and after
-            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short ${{ github.event.before }}..${{ github.sha }})
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s {\\small (%an, %ad)}' --date=short ${{ github.event.before }}..${{ github.sha }})
           fi
           
           # If no commits found, use the last one
           if [ -z "$COMMITS" ]; then
-            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short -n 1)
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s {\\small (%an, %ad)}' --date=short -n 1)
           fi
           
           # Save commits to a file because they might be multiline
@@ -60,19 +60,18 @@ jobs:
             COMMITS_SECTION="\\begin{itemize}$COMMITS\\end{itemize}"
           fi
           
-          # Create a temporary file with replacements
-          cp outputs_report.tex outputs_report_temp.tex
+          # Replace placeholders using sed
+          sed -e "s/GENERATION_DATE/${{ steps.git_info.outputs.date }}/g" \
+              -e "s/GIT_AUTHOR/${{ steps.git_info.outputs.author }}/g" \
+              outputs_report.tex > outputs_report_temp.tex
           
-          # Replace placeholders
-          sed -i "s/GENERATION_DATE/${{ steps.git_info.outputs.date }}/g" outputs_report_temp.tex
-          sed -i "s/GIT_AUTHOR/${{ steps.git_info.outputs.author }}/g" outputs_report_temp.tex
+          # Replace GIT_COMMITS placeholder with the commits section
+          # Use a temporary marker to avoid escaping issues
+          echo "$COMMITS_SECTION" > commits_section.txt
+          sed -e '/GIT_COMMITS/r commits_section.txt' -e '/GIT_COMMITS/d' outputs_report_temp.tex > outputs_report.tex
           
-          # For commits, we need to use a different approach due to multiline
-          # Use perl for more complex replacement
-          perl -i -pe "s/GIT_COMMITS/$(echo "$COMMITS_SECTION" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g' | tr '\n' ' ')/g" outputs_report_temp.tex
-          
-          # Move the temp file back
-          mv outputs_report_temp.tex outputs_report.tex
+          # Clean up
+          rm -f outputs_report_temp.tex commits_section.txt
           
           echo "LaTeX file updated with git metadata"
           
