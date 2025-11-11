@@ -53,25 +53,32 @@ jobs:
           # Read commits from file
           COMMITS=$(cat ../commits.txt)
           
-          # Create the commits section for LaTeX
+          # Create the commits section for LaTeX (single line, properly escaped)
           if [ -z "$COMMITS" ]; then
-            COMMITS_SECTION="\\begin{itemize}\\item No recent commits\\end{itemize}"
+            COMMITS_SECTION="No recent commits"
           else
-            COMMITS_SECTION="\\begin{itemize}$COMMITS\\end{itemize}"
+            # Just use the commit line directly without itemize wrapper
+            COMMITS_SECTION="$COMMITS"
           fi
           
-          # Replace placeholders using sed
-          sed -e "s/GENERATION_DATE/${{ steps.git_info.outputs.date }}/g" \
-              -e "s/GIT_AUTHOR/${{ steps.git_info.outputs.author }}/g" \
-              outputs_report.tex > outputs_report_temp.tex
+          # Use awk to replace placeholders (better for multiline)
+          awk -v date="${{ steps.git_info.outputs.date }}" \
+              -v author="${{ steps.git_info.outputs.author }}" \
+              -v commits="$COMMITS_SECTION" '
+          {
+            gsub(/GENERATION_DATE/, date)
+            gsub(/GIT_AUTHOR/, author)
+            if ($0 ~ /GIT_COMMITS/) {
+              print "        \\begin{itemize}"
+              print "        " commits
+              print "        \\end{itemize}"
+              next
+            }
+            print
+          }' outputs_report.tex > outputs_report_new.tex
           
-          # Replace GIT_COMMITS placeholder with the commits section
-          # Use a temporary marker to avoid escaping issues
-          echo "$COMMITS_SECTION" > commits_section.txt
-          sed -e '/GIT_COMMITS/r commits_section.txt' -e '/GIT_COMMITS/d' outputs_report_temp.tex > outputs_report.tex
-          
-          # Clean up
-          rm -f outputs_report_temp.tex commits_section.txt
+          # Replace original file
+          mv outputs_report_new.tex outputs_report.tex
           
           echo "LaTeX file updated with git metadata"
           
