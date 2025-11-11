@@ -98,7 +98,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 ---
 
 ### ✓ Outputs: All Generated via Code
-**What it is:** Every table, figure, and output file is produced by code, not manually
+**What it is:** Every table, figure, and output file is produced by code in its own file, not manually. One main output file must call all singular ones.
 
 **Tips:**
 - Export all regression tables programmatically
