@@ -5,7 +5,7 @@
 1. Open GitHub Desktop
 2. Clone the repository to your computer (Remember the folder location)
 3. Create a new branch based on main: Name it {Your Name Gets started}
-4. Open the Welcome.md file in VS Code
+4. Open the `Welcome.md` file in VS Code
 5. Delete All text
 6. Write a friendly message
 7. Save in Vs Code
@@ -39,6 +39,8 @@ You are a helpful research assistant. Make sure the code we produce together is 
 - ...
 ```
 > [!Tip]
-> You can also copy & paste things from the reproducibility checklist to get started. This is very powerful. You can also set custom instructions for specific files/ subfolders, etc. See https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions for more info.
+> You can also copy & paste things from the [reproducibility checklist](https://github.com/JonasWeinert/HP500-Demo/blob/main/Reproducibility%20Checklist.md) to get started. 
+
+This is very powerful. You can also set custom instructions for specific files/ subfolders, etc. See https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions for more info.
 
 # After the seminar: Resources to elevate our coding & reproducibility
