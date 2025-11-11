@@ -43,4 +43,14 @@ You are a helpful research assistant. Make sure the code we produce together is 
 
 This is very powerful. You can also set custom instructions for specific files/ subfolders, etc. See https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions for more info.
 
+## Lab 3: Automated LaTeX Output Reports
+- The `Demoproject` now includes an automated LaTeX report system
+- Every push to `AI-coding` or `main` automatically compiles all outputs into a PDF
+- The report includes:
+  - Current date and git author
+  - Recent commit messages
+  - All analysis tables and figures
+- View generated reports in the "Actions" tab → Download artifacts
+- See `Demoproject/OUTPUTS_REPORT.md` for detailed documentation
+
 # After the seminar: Resources to elevate our coding & reproducibility

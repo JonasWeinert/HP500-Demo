@@ -1,0 +1,112 @@
+name: Compile LaTeX Outputs Report
+
+on:
+  push:
+    branches:
+      - AI-coding
+      - main
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history to get commit information
+      
+      - name: Get git metadata
+        id: git_info
+        run: |
+          # Get current date
+          CURRENT_DATE=$(date '+%B %d, %Y at %H:%M UTC')
+          echo "date=$CURRENT_DATE" >> $GITHUB_OUTPUT
+          
+          # Get commit author name
+          AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
+          echo "author=$AUTHOR_NAME" >> $GITHUB_OUTPUT
+          
+          # Get all commits from this push (between before and after)
+          if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
+            # This is the first commit or a new branch
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short -n 5)
+          else
+            # Get commits between before and after
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short ${{ github.event.before }}..${{ github.sha }})
+          fi
+          
+          # If no commits found, use the last one
+          if [ -z "$COMMITS" ]; then
+            COMMITS=$(git log --pretty=format:'\\item \\textbf{%h}: %s \\\\{\\small %an - %ad}' --date=short -n 1)
+          fi
+          
+          # Save commits to a file because they might be multiline
+          echo "$COMMITS" > commits.txt
+          
+          echo "Commits collected:"
+          cat commits.txt
+      
+      - name: Inject git metadata into LaTeX
+        run: |
+          cd Demoproject
+          
+          # Read commits from file
+          COMMITS=$(cat ../commits.txt)
+          
+          # Create the commits section for LaTeX
+          if [ -z "$COMMITS" ]; then
+            COMMITS_SECTION="\\begin{itemize}\\item No recent commits\\end{itemize}"
+          else
+            COMMITS_SECTION="\\begin{itemize}$COMMITS\\end{itemize}"
+          fi
+          
+          # Create a temporary file with replacements
+          cp outputs_report.tex outputs_report_temp.tex
+          
+          # Replace placeholders
+          sed -i "s/GENERATION_DATE/${{ steps.git_info.outputs.date }}/g" outputs_report_temp.tex
+          sed -i "s/GIT_AUTHOR/${{ steps.git_info.outputs.author }}/g" outputs_report_temp.tex
+          
+          # For commits, we need to use a different approach due to multiline
+          # Use perl for more complex replacement
+          perl -i -pe "s/GIT_COMMITS/$(echo "$COMMITS_SECTION" | sed 's/\\/\\\\/g' | sed 's/\//\\\//g' | tr '\n' ' ')/g" outputs_report_temp.tex
+          
+          # Move the temp file back
+          mv outputs_report_temp.tex outputs_report.tex
+          
+          echo "LaTeX file updated with git metadata"
+          
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: outputs_report.tex
+          working_directory: Demoproject
+          args: -pdf -file-line-error -interaction=nonstopmode
+      
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs-report-pdf
+          path: Demoproject/outputs_report.pdf
+          retention-days: 90
+      
+      - name: Get short SHA
+        id: slug
+        run: echo "sha8=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
+      
+      - name: Upload to release (if exists)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
+        continue-on-error: true
+        with:
+          tag_name: latest
+          files: Demoproject/outputs_report.pdf
+          name: Latest Outputs Report
+          body: |
+            Automatically generated outputs report from commit ${{ steps.slug.outputs.sha8 }}
+            Generated on: ${{ steps.git_info.outputs.date }}
+            Author: ${{ steps.git_info.outputs.author }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

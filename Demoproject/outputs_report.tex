@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{titlesec}
+
+% Page geometry
+\geometry{margin=1in}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{QJPS Replication Outputs}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+% Graphics path
+\graphicspath{{outputs/figures/}{outputs/tables/}}
+
+% Dynamic content placeholders (will be replaced by GitHub Action)
+\newcommand{\gitdate}{GENERATION_DATE}
+\newcommand{\gitauthor}{GIT_AUTHOR}
+\newcommand{\gitcommits}{GIT_COMMITS}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries QJPS Replication Study\\[0.5cm] Outputs Report\par}
+    \vspace{2cm}
+    
+    {\Large Generated on: \gitdate\par}
+    \vspace{1cm}
+    
+    {\Large Author: \gitauthor\par}
+    \vspace{2cm}
+    
+    {\large\bfseries Recent Changes:\par}
+    \vspace{0.5cm}
+    \begin{minipage}{0.8\textwidth}
+        \gitcommits
+    \end{minipage}
+    
+    \vfill
+    
+    {\large This document is automatically generated from the analysis outputs.\\
+    Last updated from branch: AI-coding\par}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This document presents all outputs from the QJPS replication study. The analysis includes descriptive statistics, regression results, and visualizations of key findings related to village courts in Zimbabwe.
+
+The outputs are automatically compiled from the latest analysis runs and include:
+\begin{itemize}
+    \item Summary statistics tables
+    \item Regression analysis tables
+    \item Figures showing key relationships and trends
+\end{itemize}
+
+\section{Summary Statistics and Descriptive Tables}
+
+\subsection{Table 1a: Descriptive Statistics - Village Chiefs}
+
+\begin{table}[H]
+\centering
+\input{outputs/tables/Table1a.tex}
+\caption{Descriptive statistics for village chiefs characteristics}
+\label{tab:table1a}
+\end{table}
+
+\subsection{Table 1b: Additional Descriptive Statistics}
+
+\begin{table}[H]
+\centering
+\input{outputs/tables/Table1b.tex}
+\caption{Additional descriptive statistics}
+\label{tab:table1b}
+\end{table}
+
+\subsection{Table E1: Extended Results}
+
+\begin{table}[H]
+\centering
+\input{outputs/tables/TableE1.tex}
+\caption{Extended regression results}
+\label{tab:tablee1}
+\end{table}
+
+\section{Figures: Attitudes and Knowledge}
+
+\subsection{Attitudes - Existing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{attitudes_existing.pdf}
+\caption{Attitudes among existing village courts}
+\label{fig:attitudes_existing}
+\end{figure}
+
+\subsection{Attitudes - New}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{attitudes_new.pdf}
+\caption{Attitudes in newly established village courts}
+\label{fig:attitudes_new}
+\end{figure}
+
+\subsection{Knowledge - Existing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{knowledge_existing.pdf}
+\caption{Knowledge levels in existing village courts}
+\label{fig:knowledge_existing}
+\end{figure}
+
+\subsection{Knowledge - New}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{knowledge_new.pdf}
+\caption{Knowledge levels in newly established village courts}
+\label{fig:knowledge_new}
+\end{figure}
+
+\subsection{Knowledge - Community Leaders}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{knowledge_CL.pdf}
+\caption{Knowledge levels among community leaders}
+\label{fig:knowledge_cl}
+\end{figure}
+
+\subsection{Knowledge - Household Level}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{knowledge_HH.pdf}
+\caption{Knowledge levels at household level}
+\label{fig:knowledge_hh}
+\end{figure}
+
+\section{Figures: Legitimacy and Impartiality}
+
+\subsection{Legitimacy - Existing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{legitimacy_existing.pdf}
+\caption{Perceived legitimacy of existing village courts}
+\label{fig:legitimacy_existing}
+\end{figure}
+
+\subsection{Legitimacy - New}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{legitimacy_new.pdf}
+\caption{Perceived legitimacy of newly established village courts}
+\label{fig:legitimacy_new}
+\end{figure}
+
+\subsection{Legitimacy - Combined}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{legitimacy.pdf}
+\caption{Overall legitimacy measures}
+\label{fig:legitimacy}
+\end{figure}
+
+\subsection{Impartiality - Existing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{impartiality_existing.pdf}
+\caption{Perceived impartiality of existing village courts}
+\label{fig:impartiality_existing}
+\end{figure}
+
+\subsection{Impartiality - New}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{impartiality_new.pdf}
+\caption{Perceived impartiality of newly established village courts}
+\label{fig:impartiality_new}
+\end{figure}
+
+\subsection{Impartiality - Version 1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{impartiality1.pdf}
+\caption{Impartiality measures (version 1)}
+\label{fig:impartiality1}
+\end{figure}
+
+\subsection{Impartiality - Version 2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{impartiality2.pdf}
+\caption{Impartiality measures (version 2)}
+\label{fig:impartiality2}
+\end{figure}
+
+\subsection{Impartiality - Combined}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{impartiality.pdf}
+\caption{Overall impartiality measures}
+\label{fig:impartiality}
+\end{figure}
+
+\section{Figures: Procedures and Problem Management}
+
+\subsection{Procedures - Existing}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{procedures_existing.pdf}
+\caption{Procedures in existing village courts}
+\label{fig:procedures_existing}
+\end{figure}
+
+\subsection{Procedures - New}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{procedures_new.pdf}
+\caption{Procedures in newly established village courts}
+\label{fig:procedures_new}
+\end{figure}
+
+\subsection{Procedures - Combined}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{procedures.pdf}
+\caption{Overall procedures measures}
+\label{fig:procedures}
+\end{figure}
+
+\subsection{Problem Management - Version 1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{problemmanagement1.pdf}
+\caption{Problem management outcomes (version 1)}
+\label{fig:problemmanagement1}
+\end{figure}
+
+\subsection{Problem Management - Version 2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{problemmanagement2.pdf}
+\caption{Problem management outcomes (version 2)}
+\label{fig:problemmanagement2}
+\end{figure}
+
+\subsection{Problem Management - Combined}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{problemmanagement.pdf}
+\caption{Overall problem management measures}
+\label{fig:problemmanagement}
+\end{figure}
+
+\section{Figures: Contact and Independence}
+
+\subsection{Contact - Community Leaders}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{contact_CL.pdf}
+\caption{Contact patterns among community leaders}
+\label{fig:contact_cl}
+\end{figure}
+
+\subsection{Contact - Household Level}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{contact_HH.pdf}
+\caption{Contact patterns at household level}
+\label{fig:contact_hh}
+\end{figure}
+
+\subsection{Independence from Government}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{independence_govt.pdf}
+\caption{Perceived independence from government}
+\label{fig:independence_govt}
+\end{figure}
+
+\section{Conclusion}
+
+This report presents the complete set of outputs from the QJPS replication study. All figures and tables are automatically generated from the analysis pipeline and compiled into this document.
+
+For questions or more information about the methodology, please refer to the original paper in the \texttt{paper/} directory.
+
+\end{document}
+
