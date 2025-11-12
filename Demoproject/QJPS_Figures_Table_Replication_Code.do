@@ -10,7 +10,7 @@
 
 *** Column 1: VCs
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
+use "/Onedrive/julia/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
 
 local 	vars				///
 		womenVH 			///
@@ -28,7 +28,7 @@ esttab Table1a using "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/outpu
 
 *** Column 2: Existing advisers
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/CLdata_QJPS_labeled.dta", clear
+use "/Onedrive/julia/Documents/GitHub/HP500-Demo/Demoproject/data/CLdata_QJPS_labeled.dta", clear
 
 local 	vars				///
 		female 				///
