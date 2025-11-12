@@ -8,3 +8,4 @@ Don't forget to:
 - Write a small commit message & push your changes when you're done
 
 That's it 🎉
+Hi, this is Brk! Thanks for helping us get started!
