@@ -26,8 +26,8 @@
 	ieboilstart, version(14.0)
 	`r(version)'
 	
-*** Setting up users
-	global project		"/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject"
+*** Setting up users #Changed to my name, creates a global variable named project
+	global project		"/Users/brooke/Documents/GitHub/HP500-Demo/Demoproject"
 	
 	
 **** Setting up folders

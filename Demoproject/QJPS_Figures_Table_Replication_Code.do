@@ -7,10 +7,11 @@
 *** TABLE 1. COMPARING VILLAGE CHIEFS TO ADVISORS AND CIVIL SOCIETY LEADERS
 **************************************************************************
 
+${project}/data
 
 *** Column 1: VCs
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
+use "${project}/data/VHdata_QJPS_labeled.dta", clear
 
 local 	vars				///
 		womenVH 			///
@@ -24,11 +25,11 @@ local 	vars				///
 		testknowledge		
 		
 eststo Table1a: estpost sum  `vars' if VH_treat==0
-esttab Table1a using "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/outputs/tables/Table1a", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) label nodepvar noobs onecell
+esttab Table1a using "${project}/outputs/tables/Table1a", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) label nodepvar noobs onecell
 
 *** Column 2: Existing advisers
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/CLdata_QJPS_labeled.dta", clear
+use "${project}/data/CLdata_QJPS_labeled.dta", clear
 
 local 	vars				///
 		female 				///
@@ -48,7 +49,7 @@ eststo Table1b1: estpost sum `vars' if dare==1 & VH_treat==0
 *** Column 3: Other Civil Society Leaders
 eststo Table1b2: estpost sum `vars' if dare==0 & VH_treat==0
 
-esttab Table1b1 Table1b2 using "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/outputs/tables/Table1b", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) label nodepvar noobs onecell
+esttab Table1b1 Table1b2 using "${project}/outputs/tables/Table1b", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) label nodepvar noobs onecell
 
 **************************************************************************
 *** TABLE 2
@@ -59,7 +60,7 @@ esttab Table1b1 Table1b2 using "/Users/jonas/Documents/GitHub/HP500-Demo/Demopro
 // Notes: Table 2, rows 1-6: Output from tabulations below, not automated
 // Only rows 1-8 in columns 2-4 are automated
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/CLdata_QJPS_labeled.dta", clear
+use "${project}/data/CLdata_QJPS_labeled.dta", clear
 tab X1 if dare!=1
 
 eststo E1a: estpost sum female if dare!=1
@@ -77,20 +78,20 @@ estadd loc paternalrelative "`pat_relative'"
 
 **Table 2, column 4:
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/HHdata_QJPS_labeled.dta", clear
+use "${project}/data/HHdata_QJPS_labeled.dta", clear
 
 eststo E1c: estpost sum female if D37!=1
 sum VHfam if D37!=1
 local pat_relative = r(mean)/2
 estadd loc paternalrelative "`pat_relative'"
 
-esttab E1a E1b E1c using "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/outputs/tables/TableE1", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) stats(paternalrelative) label nodepvar noobs onecell
+esttab E1a E1b E1c using "${project}/outputs/tables/TableE1", tex replace cells("mean(fmt(a3))" sd(par fmt(a3))) stats(paternalrelative) label nodepvar noobs onecell
 
 **************************************************************************
 *** FIGURE 3 - The following code creates Figure 3 in the Paper
 **************************************************************************
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
+use "${project}/data/VHdata_QJPS_labeled.dta", clear
 
 * generate a variable that is uniformly distributed
 
@@ -152,7 +153,7 @@ graph export "${figures}/procedures.pdf", replace
 **************************************************************************
 
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/HHdata_QJPS_labeled.dta", clear
+use "${project}/data/HHdata_QJPS_labeled.dta", clear
 
 reg biasindex VH_treat cl i.block if diffview==1 & postremoval==0, cluster(cc)
 
@@ -252,7 +253,7 @@ graph export "${figures}/legitimacy.pdf", replace
 *** FIGURE 5
 **************************************************************************
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/HHdata_QJPS_labeled.dta", clear
+use "${project}/data/HHdata_QJPS_labeled.dta", clear
 
 reg food_aid VH_treat cl i.block if diffview==1 & postremoval==0, cluster(cc)
 
@@ -367,7 +368,7 @@ graph export "${figures}/problemmanagement2.pdf", replace
 // Notes: Some of the outputs aren't generated*
 // Until after figure 7 code starts
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
+use "${project}/data/VHdata_QJPS_labeled.dta", clear
 
 reg st_proceduresindex VH_treat cl i.block if closehat_di==0
 
@@ -515,7 +516,7 @@ graph export "${figures}/attitudes_existing.pdf", replace
 
 ****
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/HHdata_QJPS_labeled.dta", clear
+use "${project}/data/HHdata_QJPS_labeled.dta", clear
 
 reg biasindex VH_treat cl i.block if diffview==1 & postremoval==0 & closehat_di==0, cluster(cc)
 
@@ -667,7 +668,7 @@ graph export "${figures}/contact_HH.pdf", replace
 
 *********
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/VHdata_QJPS_labeled.dta", clear
+use "${project}/data/VHdata_QJPS_labeled.dta", clear
 
 reg indepgovt2 VH_treat cl i.block
 
@@ -719,7 +720,7 @@ graph export "${figures}/independence_govt.pdf", replace
 
 *************
 
-use "/Users/jonas/Documents/GitHub/HP500-Demo/Demoproject/data/CLdata_QJPS_labeled.dta", clear
+use "${project}/data/CLdata_QJPS_labeled.dta", clear
 
 reg testknowledgeCL VH_treat cl i.block if dare!=1
 
