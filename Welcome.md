@@ -1,4 +1,4 @@
-Welcome to the lab!
+Welcome to the lab! I'm Tangxin.
 
 Write your **name** and welcome message here.
 
