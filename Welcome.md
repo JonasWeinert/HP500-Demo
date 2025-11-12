@@ -1,4 +1,4 @@
-Welcome to the lab!
+Hello World, its Lauren
 
 Write your **name** and welcome message here.
 
